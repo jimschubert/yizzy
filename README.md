@@ -76,6 +76,10 @@ Build and execute locally:
   ```shell
   ./yizzy --help
   ```
+### Linting
+
+1. Install [golangci-lint](https://golangci-lint.run/usage/install/#local-installation).
+2. Run it: `golangci-lint run ./...`
 
 ## License
 

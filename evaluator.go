@@ -90,12 +90,6 @@ func (y *MigrationEvaluator) EvaluateFiles(expression string, filenames []string
 	return printer.PrintResults(matches)
 }
 
-func (y *MigrationEvaluator) processOperations(matchingNodes *list.List) error {
-	return withEnvs(*y.envContext, func() error {
-		return nil
-	})
-}
-
 func withEnvs(envs map[string]string, process func() error) error {
 	var originalEnvs = make(map[string]string)
 	for key, value := range envs {
@@ -146,7 +140,7 @@ func (y *MigrationEvaluator) EvaluateCandidateNodes(expression string, inputCand
 			// I acknowledge this is weird, but yq isn't open for extension at this point and I'd otherwise need to copy much of the lib
 			if y.currentOps != nil && matchingNodes != nil && matchingNodes.Len() > 0 {
 
-				var value = ""
+				var value string
 				ops := y.currentOps
 				if ops != nil {
 					// Eval supports query operators such as del, add, etc.
@@ -197,7 +191,6 @@ func (y *MigrationEvaluator) EvaluateCandidateNodes(expression string, inputCand
 											node.Node.Tag = *ops.ValueType
 										}
 									}
-									break
 								}
 							}
 						}

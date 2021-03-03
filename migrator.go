@@ -75,7 +75,7 @@ func (y *YamlMigrator) processFile(migration *models.MigrationDoc) error {
 	printer := yqlib.NewPrinter(outFile, false, false, false, 2, true)
 	eval := NewMigrationEvaluator(migration)
 	err = eval.EvaluateFiles(`. | ... style= ""`, []string{y.InputFile}, printer)
-	return nil
+	return err
 }
 
 func resetYqLogger() {
