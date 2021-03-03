@@ -1,0 +1,14 @@
+operations:
+  - op: modify
+    selector: .ship-to.name
+    value: env(FIRST_NAME)
+    value_type: '!!str'
+  - op: modify
+    selector: .total
+    value: "50"
+  - op: modify
+    selector: .modified-by
+    value: tool
+env:
+  FIRST_NAME: .bill-to.given
+  LAST_NAME: .bill-to.family

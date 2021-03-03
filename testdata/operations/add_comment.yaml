@@ -1,0 +1,5 @@
+operations:
+  - selector: .total
+    eval: . lineComment="Confirm that this adds up before processing."
+  - eval: . footComment="Should products array be plural?"
+

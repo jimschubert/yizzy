@@ -1,0 +1,5 @@
+operations:
+  # product[0] has quantity 4, which increases overall total by 100
+  - selector: .product[0]
+    eval: ".price += 25.0"
+  - eval: ".total = .tax + (.product[] as $product ireduce (0; . + ($product|(.quantity * .price))))"

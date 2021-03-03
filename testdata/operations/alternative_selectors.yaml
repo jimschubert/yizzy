@@ -1,0 +1,9 @@
+operations:
+  - selector: .a
+    value: populated
+    value_type: '!!str'
+  - selector: .b
+    value: "~"
+    value_type: '!!null'
+  - eval: .c = .b // .a
+

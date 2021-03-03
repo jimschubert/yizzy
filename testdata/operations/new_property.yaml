@@ -1,0 +1,4 @@
+operations:
+    - selector: .modified-by
+      value: tool
+      value_type: '!!str'
