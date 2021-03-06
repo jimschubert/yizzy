@@ -34,6 +34,74 @@ brew tap jimschubert/tap
 brew install yizzy
 ```
 
+## Usage
+
+```shell
+$ yizzy -h
+Usage:
+  yizzy [OPTIONS]
+
+Application Options:
+  -f, --file=FILE    The file to process
+  -d, --dir=         The directory where migrations reside
+      --in-place     Writes a file in place
+  -v, --version      Display version information
+
+Help Options:
+  -h, --help         Show this help message
+```
+
+### Migration document(s)
+
+A migration document holds the list of operations and environments we intend to apply to a target file. The document applies one or more 
+[expressions as supported by yq](https://mikefarah.gitbook.io/yq/) against a YAML document. 
+
+####  Migration: `operations`
+
+An operation consists of:
+
+* `value_type`: an optional, defining the [YAML type](https://yaml.org/type/) which will be applied by `value` or `eval`
+* `value`: a scalar or literal value which does not require document traversal or evaluation
+* `eval`: an expression requiring traversal or [yq operations](https://mikefarah.gitbook.io/yq/operators) evaluated in the
+  context defined by `selector` (or the document root by default)
+* `selector`: a [yq](https://mikefarah.gitbook.io/yq/) expression targeting one or more nodes on which to operate contextually
+  when applying the `value` or `eval` result
+  
+#### Migration: `env`
+
+The `env` node is a simple map of keys representing the environment variable to be set during evaluation of each operation,
+and an expression to apply whenever that environment variable is referenced via yq's [env variable operators](https://mikefarah.gitbook.io/yq/operators/env-variable-operators).
+
+**NOTE** A literal reference defined within the YAML document must result in an expression wrapped in quotes. In YAML, this
+will be the following syntax:
+
+```
+LITERAL_ENV: '"Jim Schubert"'
+```
+
+This creates an expression of `"Jim Schubert"`. One set of single/double quotes would result in an unquoted expression `Jim Schubert`,
+which would cause a parser error in yq.
+
+#### Example
+
+Create a directory called `migrations`, and create a dated YAML file within this directory. For example: `2021-03-05.yml`:
+
+```yaml
+env:
+  FIRST_NAME: .bill-to.given
+  LAST_NAME: .bill-to.family
+operations:
+  - selector: .ship-to
+    eval: '.full_name = strenv(FIRST_NAME) + " " + strenv(LAST_NAME)'
+    value_type: '!!str'
+```
+
+A migration document contains an optional map named `env`, a key/value mapping of environment variable names which will
+be passed to each operation, and a selector evaluated against the input document prior to operations. These operations are
+applied in declaration order.
+
+See [testdata](./testdata) for examples of migrations and their expectations once applied to the YAML 1.2 specification's `invoice.yaml`.
+
 ## Contributors
 
 ### Build

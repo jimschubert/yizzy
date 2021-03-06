@@ -2,6 +2,10 @@ operations:
   - selector: .ship-to
     eval: '.full_name = strenv(FIRST_NAME) + " " + strenv(LAST_NAME)'
     value_type: '!!str'
+  - selector: .ship-to
+    eval: '.co = strenv(LITERAL_ENV)'
+    value_type: '!!str'
 env:
   FIRST_NAME: .bill-to.given
   LAST_NAME: .bill-to.family
+  LITERAL_ENV: '"Jim Schubert"'
