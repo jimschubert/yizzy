@@ -67,7 +67,6 @@ dockers:
     image_templates:
       - "jimschubert/{{ .ProjectName }}:latest"
       - "jimschubert/{{ .ProjectName }}:{{ .Tag }}"
-      - "jimschubert/{{ .ProjectName }}:{{ .Tag }}-amd64"
       - "jimschubert/{{ .ProjectName }}:{{ .Major }}"
       - "jimschubert/{{ .ProjectName }}:{{ .Major }}-amd64"
       - "jimschubert/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
@@ -88,7 +87,6 @@ dockers:
     use_buildx: true
     image_templates:
       - "jimschubert/{{ .ProjectName }}:latest-arm64v8"
-      - "jimschubert/{{ .ProjectName }}:{{ .Tag }}-arm64v8"
       - "jimschubert/{{ .ProjectName }}:{{ .Major }}-arm64v8"
       - "jimschubert/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}-arm64v8"
 
